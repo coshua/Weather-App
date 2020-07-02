@@ -92,7 +92,6 @@ class Forecast extends Component {
             <img src={`http://openweathermap.org/img/wn/${this.state.icon}@2x.png`} alt="Icon" />
             <div className="main">
                {this.state.weather.main}
-               good
             </div>
             <div clasName="description">
                {this.state.weather.description}
