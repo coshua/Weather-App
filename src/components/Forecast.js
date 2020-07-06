@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import weather from './Forecast.module.css';
+import './Forecast.css';
 import city from './city';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWind, faSpinner } from '@fortawesome/free-solid-svg-icons'
