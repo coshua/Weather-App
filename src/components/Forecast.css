@@ -1,5 +1,11 @@
+.Forecast {
+    display: flex;
+}
 .create-button {
     font-weight: 600;
+    max-width: 3rem;
+    background-color: #F2933A;
+    margin: auto;
     cursor: pointer;
 }
 

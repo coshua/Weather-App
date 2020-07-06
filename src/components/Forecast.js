@@ -69,7 +69,7 @@ class Forecast extends Component {
          }).then((data) => {
             console.log(data);
             this.setState({
-               date: `${data.abbreviation}, ${data.formatted}`,
+               date: `${data.abbreviation}, ${data.formatted.substring(5)}`,
                loading: false,
             });
          }).catch(error => console.log("error!! ", error));
@@ -102,11 +102,10 @@ class Forecast extends Component {
          handleChange,
          handleSubmit,
       } = this;
-      if (this.state.lodaing) return (
-         <div>
-            <FontAwesomeIcon icon={faSpinner} pulse />
-         </div>
-      )
+      // const {
+      //    loading,
+      //    date
+      // } = this.state;
       return (
          <div className="weather">
             <div className="form">
@@ -121,7 +120,7 @@ class Forecast extends Component {
                {this.state.weather.name}, {this.state.weather.temp}°C
             </div>
             <div className="time">
-               {this.state.date}
+               {this.state.loading ? (<FontAwesomeIcon icon={faSpinner} pulse />) :(this.state.date)}
             </div>
             <img src={`http://openweathermap.org/img/wn/${this.state.icon}@2x.png`} alt="Icon" />
 
