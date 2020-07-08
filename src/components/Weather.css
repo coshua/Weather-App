@@ -1,10 +1,12 @@
 .Forecast {
     display: flex;
 }
+
 .create-button {
     font-weight: 600;
     max-width: 3rem;
-    background-color: #F2933A;
+    background-color: #73d4fa;
+    color: white;
     margin: auto;
     cursor: pointer;
 }
@@ -13,9 +15,19 @@
     /* flex: 1; 버튼을 뺀 빈 공간을 모두 채워줍니다 */
     outline: none;
     border: none;
-    border-bottom: 1px solid #F2933A;
+    border-bottom: 1px solid #73d4fa
   }
 
 .create-button:hover {
-    color: #F2933A;
+    color: cyan;
+}
+
+.message {
+    font-size: small;
+    color: #eb4034;
+    position: absolute;
+}
+
+#error {
+    border-bottom: 1px solid #eb4034;
 }
