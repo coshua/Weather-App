@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import weathercss from './Weather.module.css';
 import './Weather.css';
 import city from './city';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWind, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWind, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const WEATHER_API = process.env.REACT_APP_WEATHER_API_KEY;
 const TIMEZONE_API = process.env.REACT_APP_TIMEZONE_API_KEY;
 const LANGUAGE = "kr";
 
-class Forecast extends Component {
+class Weather extends Component {
 
    constructor() {
       super();
@@ -112,6 +112,7 @@ class Forecast extends Component {
    }
 
    render() {
+      console.log("Weather rendered");
       const {
          handleChange,
          handleSubmit,
@@ -151,4 +152,4 @@ class Forecast extends Component {
       )
    }
 }
-export default Forecast;
+export default Weather;
