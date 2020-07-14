@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 import weathercss from './Weather.module.css';
 import './Weather.css';
 import city from './city';
+/* import { NavLink, Route, Switch, BrowserRouter as Router } from 'react-router-dom'; */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWind, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { BookmarkFill, Bookmark } from 'react-bootstrap-icons';
+import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 const WEATHER_API = process.env.REACT_APP_WEATHER_API_KEY;
 const TIMEZONE_API = process.env.REACT_APP_TIMEZONE_API_KEY;
 const LANGUAGE = "kr";
+const DEFAULT_LOCATION_ID = 1842025;
 
 class Weather extends Component {
-
    constructor() {
       super();
       this.state = {
          loading: true,
          input: '',
-         id: '1835847',
+         id: DEFAULT_LOCATION_ID,
          coord: {
             lng: '',
             lat: '',
@@ -32,7 +35,29 @@ class Weather extends Component {
          },
          date: '',
          error: '',
+         daily: [],
+         hourly: [],
+         bookmark: [],
       };
+   }
+
+   showBookmarkList = () => {
+      const { bookmark } = this.state;
+      const list = bookmark.map(
+         (bookmark, key) => <a key={key} onClick={()=>this.fetchWithId(bookmark.id)}>
+            {bookmark.name}
+         </a>
+      );
+
+
+      return (      
+         <div className="dropdown">
+            <button className="dropbt">Bookmarked City</button>
+               <div className="dropdown-content">
+                  {list}
+               </div>
+         </div>
+      );
    }
 
    handleChange = (e) => {
@@ -78,12 +103,21 @@ class Weather extends Component {
 
    fetchForecast = () => {
       fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.coord.lat}&lon=${this.state.coord.lng}&
-      exclude={part}&appid=${WEATHER_API}&units=metric&lang=${LANGUAGE}
+      exclude=current,minutely&appid=${WEATHER_API}&units=metric&lang=${LANGUAGE}
       `).then(results => {
          return results.json();
       }).then(data => {
          console.log(data);
-      })
+         var dailyWeather = JSON.parse(JSON.stringify(data.daily));
+         this.setState({
+            daily: dailyWeather,
+            hourly: data.hourly,
+         })
+      }) 
+   }
+
+   convertUnixToDate = (unix) => {
+      return new Date(unix * 1000);
    }
 
    handleSubmit = (e) => {
@@ -101,6 +135,29 @@ class Weather extends Component {
       };
    }
 
+   removeFromBookmark = (e) => {
+      e.preventDefault();
+      const { bookmark } = this.state;
+      this.setState({
+         bookmark: bookmark.filter(data => data.id !== this.state.id),
+      })
+   }
+
+   addToBookmark = (e) => {
+      e.preventDefault();
+      const { bookmark } = this.state;
+      this.setState({
+         bookmark: bookmark.concat({id: this.state.id, name: this.state.weather.name}),
+      })
+   }
+
+   isWhetherMarked = () => {
+      const { bookmark } = this.state;
+      if (bookmark.length === 0) return false;
+      let filtered = bookmark.filter(data => data.id !== this.state.id);
+      return filtered.length !== bookmark.length;
+   }
+
    // handleKeyPress = (e) => {
    //    if (e.key === 'Enter') {
    //       this.handleSubmit();
@@ -116,22 +173,32 @@ class Weather extends Component {
       const {
          handleChange,
          handleSubmit,
+         removeFromBookmark,
+         addToBookmark,
+         isWhetherMarked,
+         showBookmarkList,
       } = this;
       // const {
       //    loading,
       //    date
       // } = this.state;
-      const { error, input, weather, loading, date} = this.state;
+      const { error, input, weather, loading, date, daily} = this.state;
+ /*      const nextDay = this.state.daily;
+      console.log(daily[1].clouds); */
       return (
          <div className="weather">
             <div className="form">
-               <form onSubmit={handleSubmit}>
-                  <input type="text" id={error.length > 0 ? 'error' : 'city'} name="city" value={input} onChange={handleChange} />
+               <form onSubmit={handleSubmit} autoComplete="off">
+                  <span className="bookmark">{isWhetherMarked() ?(<BookmarkFill onClick={removeFromBookmark} />) :<Bookmark onClick={addToBookmark} /> }</span>
+                  <input placeholder="Busan" type="text" id={error.length > 0 ? 'error' : 'city'} name="city" value={input} onChange={handleChange} required/>
                   <span className="message">{error}</span>
                   <div className="create-button" onClick={handleSubmit}>
                      Find
                   </div>
                </form>
+            </div>
+            <div>
+               {showBookmarkList()}
             </div>
             <div className={weathercss.name}>
                {weather.name}, {weather.temp}°C
@@ -139,7 +206,9 @@ class Weather extends Component {
             <div className={weathercss.time}>
                {loading ? (<FontAwesomeIcon icon={faSpinner} pulse />) :(date)}
             </div>
+            
             <img src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="Icon" />
+            
 
             <div className={weathercss.main}>
                {weather.main} <FontAwesomeIcon icon={faWind} />

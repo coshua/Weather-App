@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const About = (props) => {
-    const [forecast, setForecast] = useState([]);
+    //const [forecast, setForecast] = useState([]);
 
     return(
         <div className="About">

@@ -12,10 +12,12 @@ class App extends Component {
     return (
 
       <div className="App">
-        <Router>
-          <header className="App-header">
+{/*           <header className="App-header">
             <h1>React Weather App</h1>
-            <nav className="navBar">
+          </header> */}
+          <Router>
+          <main>
+          <nav className="navBar">
             <ul>
               <li>
                 <NavLink exact to="/">
@@ -29,9 +31,6 @@ class App extends Component {
               </li>
             </ul>
             </nav>
-          </header>
-
-          <main>
             <Switch>
               <Route exact path="/" component={Weather} />
               <Route exact path="/about" component={About} />
