@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import weathercss from './Weather.module.css';
 import './Weather.css';
+import Forecast from './Forecast';
 import city from './city';
-/* import { NavLink, Route, Switch, BrowserRouter as Router } from 'react-router-dom'; */
+import { NavLink, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWind, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { BookmarkFill, Bookmark } from 'react-bootstrap-icons';
-import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 const WEATHER_API = process.env.REACT_APP_WEATHER_API_KEY;
 const TIMEZONE_API = process.env.REACT_APP_TIMEZONE_API_KEY;
@@ -44,18 +44,18 @@ class Weather extends Component {
    showBookmarkList = () => {
       const { bookmark } = this.state;
       const list = bookmark.map(
-         (bookmark, key) => <a key={key} onClick={()=>this.fetchWithId(bookmark.id)}>
+         (bookmark, key) => <a href="/#" key={key} onClick={() => this.fetchWithId(bookmark.id)}>
             {bookmark.name}
          </a>
       );
 
 
-      return (      
+      return (
          <div className="dropdown">
             <button className="dropbt">Bookmarked City</button>
-               <div className="dropdown-content">
-                  {list}
-               </div>
+            <div className="dropdown-content">
+               {list}
+            </div>
          </div>
       );
    }
@@ -107,13 +107,13 @@ class Weather extends Component {
       `).then(results => {
          return results.json();
       }).then(data => {
-         console.log(data);
          var dailyWeather = JSON.parse(JSON.stringify(data.daily));
          this.setState({
             daily: dailyWeather,
             hourly: data.hourly,
          })
-      }) 
+         console.log(data);
+      })
    }
 
    convertUnixToDate = (unix) => {
@@ -127,11 +127,13 @@ class Weather extends Component {
       });
 
       if (matched.length > 0) {
-         this.setState({ loading: true,
-                        error: '', });
+         this.setState({
+            loading: true,
+            error: '',
+         });
          this.fetchWithId(matched[0].id);
       } else {
-         this.setState({ error: 'Invalid city'});
+         this.setState({ error: 'Invalid city' });
       };
    }
 
@@ -147,7 +149,7 @@ class Weather extends Component {
       e.preventDefault();
       const { bookmark } = this.state;
       this.setState({
-         bookmark: bookmark.concat({id: this.state.id, name: this.state.weather.name}),
+         bookmark: bookmark.concat({ id: this.state.id, name: this.state.weather.name }),
       })
    }
 
@@ -164,6 +166,30 @@ class Weather extends Component {
    //    }
    // }
 
+   routeForecast = () => {
+      if (this.state.daily.length > 0) {
+         const { daily } = this.state;
+         const forecastRouter = daily.map((daily, number) =>
+            <NavLink to={`${this.props.match.url}/${number}`}>
+               <img src={`http://openweathermap.org/img/wn/${daily.weather[0].icon}@2x.png`} alt="Icon" />
+            </NavLink>
+         );
+         const forecastSwitch = this.state.daily.map((daily, number) =>
+            // <Route exact path={`/${number}`} render={() => (<Forecast daily={daily} />)} />
+            <Route path={`${this.props.match.path}/:number}`} component={Forecast} />
+         );
+         return (
+            <div className="forecast">
+               {forecastRouter}
+               <Switch>
+                  {forecastSwitch}
+               </Switch>
+            </div>
+         )
+      }
+      return '';
+   }
+
    componentDidMount() {
       this.fetchWithId(this.state.id);
    }
@@ -177,47 +203,50 @@ class Weather extends Component {
          addToBookmark,
          isWhetherMarked,
          showBookmarkList,
+         routeForecast,
       } = this;
       // const {
       //    loading,
       //    date
       // } = this.state;
-      const { error, input, weather, loading, date, daily} = this.state;
- /*      const nextDay = this.state.daily;
-      console.log(daily[1].clouds); */
+      const { error, input, weather, loading, date } = this.state;
       return (
-         <div className="weather">
-            <div className="form">
-               <form onSubmit={handleSubmit} autoComplete="off">
-                  <span className="bookmark">{isWhetherMarked() ?(<BookmarkFill onClick={removeFromBookmark} />) :<Bookmark onClick={addToBookmark} /> }</span>
-                  <input placeholder="Busan" type="text" id={error.length > 0 ? 'error' : 'city'} name="city" value={input} onChange={handleChange} required/>
-                  <span className="message">{error}</span>
-                  <div className="create-button" onClick={handleSubmit}>
-                     Find
+         <Router>
+            {/* <Route exact path={this.props.match.path} component={Weather}/> */}
+            <div className="weather">
+               <div className="form">
+                  <form onSubmit={handleSubmit} autoComplete="off">
+                     <span className="bookmark">{isWhetherMarked() ? (<BookmarkFill onClick={removeFromBookmark} />) : <Bookmark onClick={addToBookmark} />}</span>
+                     <input placeholder="Busan" type="text" id={error.length > 0 ? 'error' : 'city'} name="city" value={input} onChange={handleChange} required />
+                     <span className="message">{error}</span>
+                     <div className="create-button" onClick={handleSubmit}>
+                        Find
                   </div>
-               </form>
+                  </form>
+               </div>
+               <div>
+                  {showBookmarkList()}
+               </div>
+               <div className={weathercss.name}>
+                  {weather.name}, {weather.temp}°C
             </div>
-            <div>
-               {showBookmarkList()}
-            </div>
-            <div className={weathercss.name}>
-               {weather.name}, {weather.temp}°C
-            </div>
-            <div className={weathercss.time}>
-               {loading ? (<FontAwesomeIcon icon={faSpinner} pulse />) :(date)}
-            </div>
-            
-            <img src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="Icon" />
-            
+               <div className={weathercss.time}>
+                  {loading ? (<FontAwesomeIcon icon={faSpinner} pulse />) : (date)}
+               </div>
 
-            <div className={weathercss.main}>
-               {weather.main} <FontAwesomeIcon icon={faWind} />
-               {weather.wind}m/s
+               <img src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="Icon" />
+               {routeForecast()}
+
+
+               <div className={weathercss.main}>
+                  {weather.main} <FontAwesomeIcon icon={faWind} />
+                  {weather.wind}m/s
             </div>
-            <div className={weathercss.description}>
-               {weather.description}
+               <div className={weathercss.description}>
+                  {weather.description}
+               </div>
             </div>
-         </div>
+         </Router>
       )
    }
 }

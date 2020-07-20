@@ -89,6 +89,11 @@
     background-color: #3e8e41;
 }
 
+.forecast img{
+    width: 50px;
+}
+
+
 #error {
     border-bottom: 1px solid #eb4034;
 }
