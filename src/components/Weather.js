@@ -44,7 +44,7 @@ class Weather extends Component {
    showBookmarkList = () => {
       const { bookmark } = this.state;
       const list = bookmark.map(
-         (bookmark, key) => <a href="/#" key={key} onClick={() => this.fetchWithId(bookmark.id)}>
+         (bookmark, key) => <a key={key} onClick={() => this.fetchWithId(bookmark.id)}>
             {bookmark.name}
          </a>
       );
@@ -170,13 +170,13 @@ class Weather extends Component {
       if (this.state.daily.length > 0) {
          const { daily } = this.state;
          const forecastRouter = daily.map((daily, number) =>
-            <NavLink to={`${this.props.match.url}/${number}`}>
+            <NavLink to={`/${number}`}>
                <img src={`http://openweathermap.org/img/wn/${daily.weather[0].icon}@2x.png`} alt="Icon" />
             </NavLink>
          );
          const forecastSwitch = this.state.daily.map((daily, number) =>
-            // <Route exact path={`/${number}`} render={() => (<Forecast daily={daily} />)} />
-            <Route path={`${this.props.match.path}/:number}`} component={Forecast} />
+            <Route exact path={`/${number}`} render={({history}) => (<Forecast daily={daily} history={history}/>)} />
+            // <Route path={`${this.props.match.path}/:number}`} component={Forecast} />
          );
          return (
             <div className="forecast">
@@ -186,8 +186,13 @@ class Weather extends Component {
                </Switch>
             </div>
          )
-      }
-      return '';
+      } else {
+         return (
+            <div>
+               <FontAwesomeIcon icon={faSpinner} pulse />
+            </div>
+         )
+      };
    }
 
    componentDidMount() {
@@ -212,7 +217,6 @@ class Weather extends Component {
       const { error, input, weather, loading, date } = this.state;
       return (
          <Router>
-            {/* <Route exact path={this.props.match.path} component={Weather}/> */}
             <div className="weather">
                <div className="form">
                   <form onSubmit={handleSubmit} autoComplete="off">

@@ -91,6 +91,11 @@
 
 .forecast img{
     width: 50px;
+    opacity: 50%;
+}
+
+.forecast img:hover{
+    opacity: 100%;
 }
 
 
