@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { NavLink, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 // import { Nav, Navbar, NavItem} from "react-bootstrap";
 import './App.css';
-import Weather from './components/Weather';
+import WeatherRouter from './components/WeatherRouter';
 import About from './components/About';
 
 class App extends Component {
 
   render() {
-    console.log("App rendered");
     return (
 
       <div className="App">
@@ -32,7 +31,7 @@ class App extends Component {
             </ul>
             </nav>
             <Switch>
-              <Route exact path="/" component={Weather} />
+              <Route exact path="/" component={WeatherRouter} />
               <Route exact path="/about" component={About} />
             </Switch>
           </main>
