@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import city from './city';
 import { NavLink, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Weather from './Weather';
+import ForecastList from './ForecastList';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const WEATHER_API = process.env.REACT_APP_WEATHER_API_KEY;
 const TIMEZONE_API = process.env.REACT_APP_TIMEZONE_API_KEY;
@@ -153,6 +156,7 @@ class WeatherRouter extends Component {
             current,
             id,
             bookmark,
+            daily
         } = this.state;
 
         return (
@@ -170,6 +174,7 @@ class WeatherRouter extends Component {
                         fetchWithId={fetchWithId} bookmark={bookmark}
                         current={current} id={id}
                         error={error} loading={loading} date={date} />)} />
+                {this.state.daily.length > 0 ? (<ForecastList daily={daily}/>) : (<FontAwesomeIcon icon={faSpinner} pulse />)}
             </>
         );
     }

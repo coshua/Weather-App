@@ -52,9 +52,6 @@ const feelsLike = (daily) => {
 
 const Forecast = ( props ) => {
     // const [forecast, setForecast] = useState([]);
-
-   
-
     return(
         <div>
             {feelsLike(props.daily)} <br/>
