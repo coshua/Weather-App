@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import city from './city';
 import { NavLink, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Weather from './Weather';
+import Forecast from './Forecast';
 import ForecastList from './ForecastList';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,9 +22,11 @@ class WeatherRouter extends Component {
             current: {},
             date: '',
             error: '',
+            degree: 'C',
             daily: [],
             hourly: [],
             bookmark: [],
+            searchHistory: [],
         }
     };
 
@@ -40,14 +43,34 @@ class WeatherRouter extends Component {
         });
 
         if (matched.length > 0) {
+            const { searchHistory } = this.state;
             this.setState({
+                searchHistory: searchHistory.concat({
+                    id: matched[0].id,
+                    name: this.state.input.toLowerCase(),
+                }),
                 loading: true,
                 error: '',
+                input: '',
             });
             this.fetchWithId(matched[0].id);
         } else {
             this.setState({ error: 'Invalid city' });
         };
+    }
+
+    handleRemove = (id) => {
+        const { searchHistory } = this.state;
+        this.setState({
+            searchHistory: searchHistory.filter(list => list.id !== id)
+        });
+    }
+
+    handleDegree = (e) => {
+        e.preventDefault();
+        this.setState({
+            degree: e.target.name
+        });
     }
 
     fetchWithId = (id) => {
@@ -132,6 +155,27 @@ class WeatherRouter extends Component {
         );
     }
 
+    showSearchList = () => {
+        const { searchHistory } = this.state;
+        const list = searchHistory.map(
+            (history, key) =>
+                <>
+                    <a className="historyName"key={key} onClick={() => this.fetchWithId(history.id)}>
+                        {history.name}
+                    </a>
+                    <a className="historyRemove" key={key} onClick={() => this.handleRemove(history.id)}>
+                        x
+                    </a>
+                </>
+        );
+
+        return (
+            <div className="history">
+                {list}
+            </div>
+        );
+    }
+
     componentDidMount() {
         console.log("didmount")
         this.fetchWithId(this.state.id);
@@ -146,7 +190,9 @@ class WeatherRouter extends Component {
             addToBookmark,
             isWhetherMarked,
             showBookmarkList,
+            showSearchList,
             fetchWithId,
+            handleDegree,
         } = this;
 
         const {
@@ -155,8 +201,10 @@ class WeatherRouter extends Component {
             date,
             current,
             id,
+            input,
+            degree,
             bookmark,
-            daily
+            daily,
         } = this.state;
 
         return (
@@ -171,10 +219,17 @@ class WeatherRouter extends Component {
                     (<Weather handleChange={handleChange} handleSubmit={handleSubmit}
                         removeFromBookmark={removeFromBookmark} addToBookmark={addToBookmark}
                         isWhetherMarked={isWhetherMarked} showBookmarkList={showBookmarkList}
-                        fetchWithId={fetchWithId} bookmark={bookmark}
-                        current={current} id={id}
+                        fetchWithId={fetchWithId} handleDegree={handleDegree}
+                        showSearchList={showSearchList}
+                        bookmark={bookmark} degree={degree}
+                        current={current} id={id} input={input} 
                         error={error} loading={loading} date={date} />)} />
-                {this.state.daily.length > 0 ? (<ForecastList daily={daily}/>) : (<FontAwesomeIcon icon={faSpinner} pulse />)}
+                {this.state.daily.length > 0 ? (<>
+                    <Route path={`/:id`} render={({ match, history }) =>
+                        (<Forecast match={match} history={history} daily={daily} />)} />
+                    <Route path={this.props.match.url} render={({ match, history }) =>
+                        (<ForecastList daily={daily} match={match} history={history} />)} />
+                </>) : (<FontAwesomeIcon icon={faSpinner} pulse />)}
             </>
         );
     }

@@ -50,16 +50,19 @@ const feelsLike = (daily) => {
     return message;
 }
 
-const Forecast = ( props ) => {
+const Forecast = ( {match, history, daily}) => {
+    // const specific = daily[match.params.id];
+    const specific = daily[0];
+    console.log(specific);
     // const [forecast, setForecast] = useState([]);
     return(
         <div>
-            {feelsLike(props.daily)} <br/>
-            {measurePrecip(props.daily)} <br/>
-            {convertUnixToDate(props.daily.dt)} <br/>
-            {measureUVI(props.daily.uvi)} <br/>
-            {measureWindspeed(props.daily.wind_speed)}
-            <button onClick={() => props.history.goBack()}>Back</button>
+            {feelsLike(specific)} <br/>
+            {measurePrecip(specific)} <br/>
+            {convertUnixToDate(specific.dt)} <br/>
+            {measureUVI(specific.uvi)} <br/>
+            {measureWindspeed(specific.wind_speed)}
+            <button onClick={() => history.goBack()}>Back</button>
         </div>
     );
 }

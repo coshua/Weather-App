@@ -98,6 +98,51 @@
     opacity: 100%;
 }
 
+.degree {
+    border-collapse: collapse;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 0.5rem;
+}
+
+.degree button{
+    background-color: white;
+    border-collapse: collapse;
+    border: 1px solid #e783ba;
+    color: #777777;
+    display: block;
+    width: 40px;
+    cursor: pointer;
+}
+/* 
+.degree button:not(:last-child) {
+    border-bottom: none;
+} */
+
+.degree button:hover{
+    border: 1px solid #df499b;
+}
+
+.degree .activedegree {
+    font-weight: bolder;
+}
+
+.history {
+    font-size: smaller;
+    font-weight: lighter;
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
+}
+
+.historyRemove:hover{
+    cursor: pointer;
+}
+
+.historyRemove {
+    margin-left: 3px;
+    margin-right: 3px;
+    color: #eb4034
+}
 
 #error {
     border-bottom: 1px solid #eb4034;

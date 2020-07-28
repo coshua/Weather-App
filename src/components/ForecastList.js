@@ -21,7 +21,7 @@ class ForecastList extends Component {
     }
 
     render() {
-        const { daily } = this.props;
+        const { daily, history, match } = this.props;
         const forecastRouter = daily.map((daily, number) =>
             <div className="item">
                 <NavLink to={`/${number}`}>
@@ -30,14 +30,14 @@ class ForecastList extends Component {
                 <p className="caption">{this.convertUnixToAbbr(daily.dt)} </p>
             </div>
         );
-        const forecastSwitch = daily.map((daily, number) =>
-            <Route exact path={`/${number}`} render={({ history }) => (<Forecast daily={daily} history={history} />)} />
-            // <Route path={`${this.props.match.path}/:number}`} component={Forecast} />
-        );
+        // const forecastSwitch = 
+        //     <Route path={`/:number`} render={() => (<Forecast daily={daily} match={match} history={history} />)} />
+        //     // <Route path={`${this.props.match.path}/:number}`} component={Forecast} />
+        // ;
         return (
             <div className="forecast">
                 {forecastRouter}
-                {forecastSwitch}
+                {/* {forecastSwitch} */}
             </div>
         )
     }

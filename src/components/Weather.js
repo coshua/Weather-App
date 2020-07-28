@@ -198,12 +198,15 @@ class Weather extends Component {
    // componentDidMount() {
    //    this.props.fetchWithId(this.props.id);
    // }
-//    isWhetherMarked = () => {
-//       const { bookmark } = this.props;
-//       if (bookmark.length === 0) return false;
-//       let filtered = bookmark.filter(data => data.id !== this.state.id);
-//       return filtered.length !== bookmark.length;
-//   }
+   //    isWhetherMarked = () => {
+   //       const { bookmark } = this.props;
+   //       if (bookmark.length === 0) return false;
+   //       let filtered = bookmark.filter(data => data.id !== this.state.id);
+   //       return filtered.length !== bookmark.length;
+   //   }
+   convertDegreeUnit = (c) => {
+      return Math.round(((c * 9 / 5) + 32) * 100) / 100;
+   };
 
    render() {
       console.log("Weather rendered");
@@ -224,48 +227,60 @@ class Weather extends Component {
       //    isWhetherMarked
       // } = this;
       const {
-         error, input, current, loading, date, handleChange, handleSubmit,
-         removeFromBookmark, addToBookmark, showBookmarkList, isWhetherMarked
+         error, input, current, loading, date, degree, handleChange, handleSubmit, handleDegree,
+         removeFromBookmark, addToBookmark, showBookmarkList, isWhetherMarked, showSearchList,
       } = this.props;
       console.log(current);
+      const displayDegree = Object.keys(current).length > 0 ? (
+         degree === 'C' ?
+            (<>{current.name}, {current.main.temp}°C</>) :
+            (<>{current.name}, {this.convertDegreeUnit(current.main.temp)}°F</>)
+      ) : '';
+
       return (
          <>
-         {Object.keys(current).length > 0 ? (
-         <div className="weather">
-            <div className="form">
-               <form onSubmit={handleSubmit} autoComplete="off">
-                  <span className="bookmark">{isWhetherMarked() ? (<BookmarkFill onClick={removeFromBookmark} />) : <Bookmark onClick={addToBookmark} />}</span>
-                  <input placeholder="Busan" type="text" id={error.length > 0 ? 'error' : 'city'} name="city" value={input} onChange={handleChange} required />
-                  <span className="message">{error}</span>
-                  <div className="create-button" onClick={handleSubmit}>
-                     Find
+            {Object.keys(current).length > 0 ? (
+               <div className="weather">
+                  <div className="form">
+                     <form onSubmit={handleSubmit} autoComplete="off">
+                        <span className="bookmark">{isWhetherMarked() ? (<BookmarkFill onClick={removeFromBookmark} />) : <Bookmark onClick={addToBookmark} />}</span>
+                        <input placeholder="Busan" type="text" spellcheck="false" id={error.length > 0 ? 'error' : 'city'} name="city" value={input} onChange={handleChange} required />
+                        <span className="message">{error}</span>
+                        {showSearchList()}
+                        <div className="create-button" onClick={handleSubmit}>
+                           Find
                   </div>
-               </form>
-            </div>
-            <div>
-               {showBookmarkList()}
-            </div>
-            
-            <div className={weathercss.name}>
-               {current.name}, {current.main.temp}°C
-            </div>
-            <div className={weathercss.time}>
-               {loading ? (<FontAwesomeIcon icon={faSpinner} pulse />) : (date)}
-            </div>
+                     </form>
+                  </div>
+                  <div>
+                     {showBookmarkList()}
+                  </div>
 
-            <img src={`http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`} alt="Icon" />
-            {/* {routeForecast()} */}
+                  <div className={weathercss.name}>
+                     {/* {current.name}, {current.main.temp}°C  */}
+                     {displayDegree}
+                     <span className="degree">
+                        <button onClick={handleDegree} name="C" className={degree === 'C' ? 'activedegree' : ''}>°C</button>
+                        <button onClick={handleDegree} name="F" className={degree === 'F' ? 'activedegree' : ''}>°F</button>
+                     </span>
+                  </div>
+                  <div className={weathercss.time}>
+                     {loading ? (<FontAwesomeIcon icon={faSpinner} pulse />) : (date)}
+                  </div>
+
+                  <img src={`http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`} alt="Icon" />
+                  {/* {routeForecast()} */}
 
 
-            <div className={weathercss.main}>
-               {current.weather[0].main} <FontAwesomeIcon icon={faWind} />
-               {current.wind.speed}m/s
+                  <div className={weathercss.main}>
+                     {current.weather[0].main} <FontAwesomeIcon icon={faWind} />
+                     {current.wind.speed}m/s
             </div>
-            <div className={weathercss.description}>
-               {current.weather[0].description}
-            </div>
+                  <div className={weathercss.description}>
+                     {current.weather[0].description}
+                  </div>
 
-         </div> ) : ''}
+               </div>) : ''}
          </>
       )
    }
