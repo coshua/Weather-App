@@ -1,0 +1,16 @@
+.item{
+    position: relative;
+    display: inline-block; /* Make the width of box same as image */
+    width: 4.5%;
+}
+.item .caption{
+    position: absolute;
+    z-index: 999;
+    /* margin: 0 auto; */
+    left: 0;
+    right: 0;
+    top: 50%; /* Adjust this value to move the positioned div up and down */
+    font-size: x-small;
+    text-align: center;
+     /* Set the width of the positioned div */
+}
