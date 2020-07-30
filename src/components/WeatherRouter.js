@@ -225,9 +225,9 @@ class WeatherRouter extends Component {
                         current={current} id={id} input={input} 
                         error={error} loading={loading} date={date} />)} />
                 {this.state.daily.length > 0 ? (<>
-                    <Route path={`/:id`} render={({ match, history }) =>
-                        (<Forecast match={match} history={history} daily={daily} />)} />
-                    <Route path={this.props.match.url} render={({ match, history }) =>
+                    <Route path={`${this.props.match.path}/:id`} render={({ match, history }) =>
+                        (<Forecast match={match} history={history} daily={daily} city={current.name}/>)} />
+                    <Route exact path={this.props.match.url} render={({ match, history }) =>
                         (<ForecastList daily={daily} match={match} history={history} />)} />
                 </>) : (<FontAwesomeIcon icon={faSpinner} pulse />)}
             </>

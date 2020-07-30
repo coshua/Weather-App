@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink, matchPath } from 'react-router-dom';
 
 const convertDayToString = (day) => {
     var result;
@@ -13,7 +14,7 @@ const convertUnixToDate = (dt) => {
     var date = time.getDate();
     var hours = time.getHours();
     var day = time.getDay();
-    return convertDayToString(day) + ", " + date + ", " + hours;
+    return convertDayToString(day) + ", " + date;
 }
 
 const measureUVI = (uvi) => {
@@ -44,25 +45,62 @@ const measureWindspeed = (wind) => {
 }
 
 const feelsLike = (daily) => {
-    var message = `낮과 밤 동안의 체감 온도는 각각 ${daily.feels_like.day}°C, 
-                    ${daily.feels_like.night}°C 입니다. 일교차는 ${Math.round((daily.temp.max- daily.temp.min) * 100)/100}
-                   °C 입니다.`;
+    var message = `낮과 밤 동안의 체감 온도는 각각 ${Math.round(daily.feels_like.day * 10) / 10}°C, 
+                ${Math.round(daily.feels_like.night * 10) / 10}°C 입니다. 일교차는 ${Math.round((daily.temp.max- daily.temp.min) * 10)/10}
+                °C 입니다.`;
     return message;
 }
 
-const Forecast = ( {match, history, daily}) => {
+const findDate = (dt) => {
+    var time = new Date(dt * 1000);
+    return time.getDate();
+}
+
+const findMonth = (dt) => {
+    var time = new Date(dt * 1000);
+    return time.getMonth();
+}
+
+const Forecast = ( {match, history, daily, city}) => {
     // const specific = daily[match.params.id];
-    const specific = daily[0];
-    console.log(specific);
+    const day = daily.filter(daily => 
+        findDate(daily.dt)+"" === match.params.id
+    );
+    const specific = day[0];
+
+    const calculateDay = (num) => {
+        var num = parseInt(num);
+        var month = findMonth(specific.dt) + 1;
+        console.log(month);
+        console.log(parseInt(match.params.id) + num);
+        if (month == 1 || 3 || 5 || 7 || 8 || 10 || 12) {
+            console.log("1 3 5");
+            if (parseInt(match.params.id) + num > 31) {
+                return parseInt(match.params.id) + num - 31;
+            } else {
+                return parseInt(match.params.id) + num;
+            }
+        } else if (month == 4 || 6 || 9 || 11) {
+            console.log("4 6");
+            if (parseInt(match.params.id) + num > 30) {
+                return parseInt(match.params.id) + num - 30;
+            } else {
+                return parseInt(match.params.id) + num;
+            }
+        }
+    };
     // const [forecast, setForecast] = useState([]);
     return(
         <div>
+            {`Weather of ${city}, ${convertUnixToDate(specific.dt)}`} <br/>
             {feelsLike(specific)} <br/>
             {measurePrecip(specific)} <br/>
             {convertUnixToDate(specific.dt)} <br/>
             {measureUVI(specific.uvi)} <br/>
-            {measureWindspeed(specific.wind_speed)}
+            {measureWindspeed(specific.wind_speed)} <br/>
             <button onClick={() => history.goBack()}>Back</button>
+            <NavLink to={`/weather/${calculateDay(1)}`} > <button>Next</button> </NavLink>
+            <NavLink to={`/weather/${calculateDay(-1)}`} > <button>Previous</button></NavLink>
         </div>
     );
 }

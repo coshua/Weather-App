@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { NavLink, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-// import { Nav, Navbar, NavItem} from "react-bootstrap";
 import './App.css';
 import WeatherRouter from './components/WeatherRouter';
 import About from './components/About';
+import Home from './components/Home';
 
 class App extends Component {
 
@@ -19,7 +19,7 @@ class App extends Component {
           <nav className="navBar">
             <ul>
               <li>
-                <NavLink exact to="/">
+                <NavLink exact to="/weather">
                   Weather
                 </NavLink>
               </li>
@@ -31,8 +31,9 @@ class App extends Component {
             </ul>
             </nav>
             <Switch>
-              <Route exact path="/" component={WeatherRouter} />
-              <Route exact path="/about" component={About} />
+              <Route exact path="/" component={Home} />
+              <Route path="/weather" component={WeatherRouter} />
+              <Route path="/about" component={About} />
             </Switch>
           </main>
 

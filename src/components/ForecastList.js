@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Forecast from './Forecast';
 import './ForecastList.css';
 import { NavLink, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
@@ -20,24 +19,24 @@ class ForecastList extends Component {
         return this.convertDayToString(day) + ", " + date;
     }
 
+    convertUnixToDate = (dt) => {
+        var time = new Date(dt * 1000);
+        return time.getDate();
+    }
+
     render() {
         const { daily, history, match } = this.props;
-        const forecastRouter = daily.map((daily, number) =>
+        const forecastRouter = daily.map((daily) =>
             <div className="item">
-                <NavLink to={`/${number}`}>
+                <NavLink to={`${match.path}/${this.convertUnixToDate(daily.dt)}`}>
                     <img src={`http://openweathermap.org/img/wn/${daily.weather[0].icon}@2x.png`} alt="Icon" />
                 </NavLink>
                 <p className="caption">{this.convertUnixToAbbr(daily.dt)} </p>
             </div>
         );
-        // const forecastSwitch = 
-        //     <Route path={`/:number`} render={() => (<Forecast daily={daily} match={match} history={history} />)} />
-        //     // <Route path={`${this.props.match.path}/:number}`} component={Forecast} />
-        // ;
         return (
             <div className="forecast">
                 {forecastRouter}
-                {/* {forecastSwitch} */}
             </div>
         )
     }
