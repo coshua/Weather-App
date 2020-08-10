@@ -45,10 +45,10 @@ class WeatherRouter extends Component {
         if (matched.length > 0) {
             const { searchHistory } = this.state;
             this.setState({
-                searchHistory: searchHistory.concat({
+                searchHistory: [{
                     id: matched[0].id,
                     name: this.state.input.toLowerCase(),
-                }),
+                }].concat(searchHistory),
                 loading: true,
                 error: '',
                 input: '',

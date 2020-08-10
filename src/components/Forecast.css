@@ -1,0 +1,19 @@
+.buttonGroup {
+    position: fixed;
+    margin-top: 10px;
+}
+
+.center {   
+    position: fixed;
+    right: 610px;
+}
+
+#previous {
+    position: fixed;
+    right: 710px;
+}
+
+#next {
+    position: fixed;
+    right: 520px;
+}
