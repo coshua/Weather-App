@@ -67,3 +67,8 @@ header {
   color: white;
 }
 
+#langButton {
+  position: absolute;
+  right: 100px;
+  top: 15px;
+}

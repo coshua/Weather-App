@@ -2,6 +2,10 @@
     display: flex;
 }
 
+#mainIcon {
+    width: 140px;
+}
+
 .create-button {
     font-weight: 600;
     max-width: 3rem;
@@ -108,23 +112,32 @@
 .degree button{
     background-color: white;
     border-collapse: collapse;
+    border-spacing: 0px;
     border: 1px solid #e783ba;
     color: #777777;
     display: block;
     width: 40px;
     cursor: pointer;
 }
-/* 
+
 .degree button:not(:last-child) {
     border-bottom: none;
+}
+
+/* .degree button:hover{    
+    border-collapse: collapse;
+    border: 1px solid #df499b;
 } */
 
-.degree button:hover{
-    border: 1px solid #df499b;
-}
+/* why border does not collapse when hover */
+
 
 .degree .activedegree {
     font-weight: bolder;
+}
+
+.degree button:focus{
+    outline: 0;
 }
 
 .history {

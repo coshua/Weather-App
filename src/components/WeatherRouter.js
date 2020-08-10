@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import city from './city';
 import { NavLink, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import LangContext from './LangContext';
 import Weather from './Weather';
 import Forecast from './Forecast';
 import ForecastList from './ForecastList';
@@ -9,10 +10,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const WEATHER_API = process.env.REACT_APP_WEATHER_API_KEY;
 const TIMEZONE_API = process.env.REACT_APP_TIMEZONE_API_KEY;
-const LANGUAGE = "kr";
 const DEFAULT_LOCATION_ID = 1842025;
 
 class WeatherRouter extends Component {
+
+    static contextType = LangContext;
     constructor() {
         super();
         this.state = {
@@ -37,6 +39,7 @@ class WeatherRouter extends Component {
     }
 
     handleSubmit = (e) => {
+        let lang = this.context;
         e.preventDefault(); //need to understand
         const matched = city.filter((data) => {
             return (data.name.toLowerCase() === (this.state.input.toLowerCase()));
@@ -55,7 +58,8 @@ class WeatherRouter extends Component {
             });
             this.fetchWithId(matched[0].id);
         } else {
-            this.setState({ error: 'Invalid city' });
+            let error = lang === "kr" ? "잘못 입력되었습니다." : "Invalid city";
+            this.setState({ error: error });
         };
     }
 
@@ -74,7 +78,8 @@ class WeatherRouter extends Component {
     }
 
     fetchWithId = (id) => {
-        fetch(`http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=${WEATHER_API}&lang=${LANGUAGE}`)
+        let lang = this.context;
+        fetch(`http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=${WEATHER_API}&lang=${lang}`)
             .then(results => {
                 return results.json();
             }).then((data) => {
@@ -98,8 +103,9 @@ class WeatherRouter extends Component {
     }
 
     fetchForecast = () => {
+        let lang = this.context;
         fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.current.coord.lat}&lon=${this.state.current.coord.lon}&
-        exclude=current,minutely&appid=${WEATHER_API}&units=metric&lang=${LANGUAGE}
+        exclude=current,minutely&appid=${WEATHER_API}&units=metric&lang=${lang}
         `).then(results => {
             return results.json();
         }).then(data => {
@@ -137,6 +143,7 @@ class WeatherRouter extends Component {
     }
 
     showBookmarkList = () => {
+        let lang = this.context;
         const { bookmark } = this.state;
         const list = bookmark.map(
             (bookmark, key) => <a key={key} onClick={() => this.fetchWithId(bookmark.id)}>
@@ -147,7 +154,7 @@ class WeatherRouter extends Component {
 
         return (
             <div className="dropdown">
-                <button className="dropbt">Bookmarked City</button>
+                <button className="dropbt">{lang==="kr" ? "저장된 장소" : "Bookmarked City"}</button>
                 <div className="dropdown-content">
                     {list}
                 </div>

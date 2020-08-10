@@ -14,3 +14,7 @@
     text-align: center;
      /* Set the width of the positioned div */
 }
+
+.forecast {
+    margin-top: 20px;
+}
