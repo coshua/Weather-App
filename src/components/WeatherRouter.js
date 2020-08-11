@@ -201,6 +201,8 @@ class WeatherRouter extends Component {
             fetchWithId,
             handleDegree,
         } = this;
+        
+        const lang = this.context;
 
         const {
             loading,
