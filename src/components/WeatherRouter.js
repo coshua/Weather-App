@@ -114,7 +114,6 @@ class WeatherRouter extends Component {
                 daily: data.daily,
                 hourly: data.hourly,
             })
-            console.log(data);
         })
     }
 
@@ -184,8 +183,16 @@ class WeatherRouter extends Component {
     }
 
     componentDidMount() {
-        console.log("didmount")
-        this.fetchWithId(this.state.id);
+        console.log("didmount");
+        fetch('http://localhost:5000/api')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data.city);
+                this.setState({
+                    id: data.city,
+                });
+                this.fetchWithId(this.state.id)
+            })
     }
 
 
