@@ -184,7 +184,7 @@ class WeatherRouter extends Component {
 
     componentDidMount() {
         console.log("didmount");
-        fetch('http://localhost:5000/api')
+        try {fetch('http://localhost:5000/api')
             .then(res => res.json())
             .then(data => {
                 console.log(data.city);
@@ -193,6 +193,9 @@ class WeatherRouter extends Component {
                 });
                 this.fetchWithId(this.state.id)
             })
+        } finally {
+            this.fetchWithId(this.state.id);
+        }
     }
 
 
