@@ -26,9 +26,9 @@ class App extends Component {
           {/*           <header className="App-header">
             <h1>React Weather App</h1>
           </header> */}
-          <header className="App-header">
+          <head>
             <title>Weather</title>
-          </header>
+          </head>
           <Router>
             <main>
               <nav className="navBar">
