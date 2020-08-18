@@ -94,7 +94,7 @@
 }
 
 .forecast img{
-    width: 50px;
+    width: 30px; /*changed for building */
     opacity: 50%;
 }
 
