@@ -29,7 +29,7 @@ class ForecastList extends Component {
         const forecastRouter = daily.map((daily) =>
             <div className="item">
                 <NavLink to={`${match.path}/${this.convertUnixToDate(daily.dt)}`}>
-                    <img src={`http://openweathermap.org/img/wn/${daily.weather[0].icon}@2x.png`} alt="Icon" />
+                    <img src={`https://openweathermap.org/img/wn/${daily.weather[0].icon}@2x.png`} alt="Icon" />
                 </NavLink>
                 <p className="caption">{this.convertUnixToAbbr(daily.dt)}<br/>
                 {Math.round(daily.temp.max)}, {Math.round(daily.temp.min)}</p>

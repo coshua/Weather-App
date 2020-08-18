@@ -69,7 +69,7 @@ class Weather extends Component {
                      {loading ? (<FontAwesomeIcon icon={faSpinner} pulse />) : (date)}
                   </div>
 
-                  <img id="mainIcon" src={`http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`} alt="Icon" />
+                  <img id="mainIcon" src={`https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`} alt="Icon" />
 
                   <div className={weathercss.main}>
                      {current.weather[0].main} <FontAwesomeIcon icon={faWind} />
