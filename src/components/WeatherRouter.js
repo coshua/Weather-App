@@ -183,19 +183,20 @@ class WeatherRouter extends Component {
     }
 
     componentDidMount() {
-        console.log("didmount");
-        try {fetch('http://localhost:5000/api')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data.city);
-                this.setState({
-                    id: data.city,
-                });
-                this.fetchWithId(this.state.id)
-            })
-        } finally {
-            this.fetchWithId(this.state.id);
-        }
+        // console.log("didmount");
+        // try {fetch('http://localhost:5000/api')
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         console.log(data.city);
+        //         this.setState({
+        //             id: data.city,
+        //         });
+        //         this.fetchWithId(this.state.id)
+        //     })
+        // } finally {
+        //     this.fetchWithId(this.state.id);
+        // }
+        this.fetchWithId(this.state.id);
     }
 
 
