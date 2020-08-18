@@ -79,7 +79,7 @@ class WeatherRouter extends Component {
 
     fetchWithId = (id) => {
         let lang = this.context;
-        fetch(`http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=${WEATHER_API}&lang=${lang}`)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=${WEATHER_API}&lang=${lang}`)
             .then(results => {
                 return results.json();
             }).then((data) => {
@@ -91,7 +91,7 @@ class WeatherRouter extends Component {
                     current: current,
                 });
                 console.log("updated " + data.name);
-                return fetch(`http://api.timezonedb.com/v2.1/get-time-zone?key=${TIMEZONE_API}&format=json&by=position&lat=${this.state.current.coord.lat}&lng=${this.state.current.coord.lon}`);
+                return fetch(`https://api.timezonedb.com/v2.1/get-time-zone?key=${TIMEZONE_API}&format=json&by=position&lat=${this.state.current.coord.lat}&lng=${this.state.current.coord.lon}`);
             }).then(results => {
                 return results.json();
             }).then((data) => {
