@@ -18,8 +18,8 @@ if [[ $TRAVIS_BRANCH == $STAGING_BRANCH ]]; then
   yarn build
 elif [[ $TRAVIS_BRANCH == $PRODUCTION_BRANCH ]]; then
   NODE_ENV="production"
-  CLOUDFRONT_DIST_ID=$CLOUDFRONT_DIST_ID_PRODUCTION
-  S3_BUCKET="weather-project-production"
+  CLOUDFRONT_DIST_ID=$CLOUDFRONT_DIST_ID_STAGING
+  S3_BUCKET="weather-project"
   yarn build
 else
   # Don't want to deploy if it's not one of the above branches
