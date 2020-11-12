@@ -94,7 +94,7 @@
 }
 
 .forecast img{
-    width: 30px; /*changed for building */
+    width: 30px; /*changed for building. default = 50 */
     opacity: 50%;
 }
 
@@ -103,6 +103,7 @@
 }
 
 .degree {
+    font-size: 16;
     border-collapse: collapse;
     position: absolute;
     margin-top: 10px;
@@ -110,6 +111,7 @@
 }
 
 .degree button{
+    height: 30;
     background-color: white;
     border-collapse: collapse;
     border-spacing: 0px;

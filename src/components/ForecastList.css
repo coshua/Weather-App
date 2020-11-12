@@ -1,9 +1,9 @@
-.item{
+.items{
     position: relative;
     display: inline-block; /* Make the width of box same as image */
     width: 4.5%;
 }
-.item .caption{
+.items .caption{
     position: absolute;
     z-index: 999;
     /* margin: 0 auto; */
