@@ -129,8 +129,6 @@ const Forecast = ({ match, history, daily, city }) => {
   console.log("Forecast loaded");
   const lang = useContext(LangContext);
   let specific;
-  console.log(daily);
-  console.log(match.params);
   useEffect(() => {
     const day = daily.filter(
       (daily) => findDate(daily.dt) + "" === match.params.id
