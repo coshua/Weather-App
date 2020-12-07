@@ -1,129 +1,133 @@
 .Forecast {
-    display: flex;
+  display: flex;
 }
 
 #mainIcon {
-    width: 140px;
+  width: 140px;
 }
 
 .create-button {
-    font-weight: 600;
-    max-width: 3rem;
-    background-color: #73d4fa;
-    color: white;
-    margin: auto;
-    cursor: pointer;
+  font-weight: 600;
+  max-width: 3rem;
+  background-color: #73d4fa;
+  color: white;
+  margin: auto;
+  cursor: pointer;
 }
 .form {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
 .form input {
-    /* flex: 1; 버튼을 뺀 빈 공간을 모두 채워줍니다 */
-    outline: none;
-    border: none;
-    border-bottom: 1px solid #ceefff;
+  /* flex: 1; 버튼을 뺀 빈 공간을 모두 채워줍니다 */
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #ceefff;
 }
 
 .form input:focus {
-    border-bottom: 1px solid #73d4fa;
+  border-bottom: 1px solid #73d4fa;
 }
 
 .create-button:hover {
-    color: cyan;
+  color: cyan;
 }
 
 .message {
-    font-size: small;
-    color: #eb4034;
-    position: absolute;
+  font-size: small;
+  color: #eb4034;
+  position: absolute;
 }
 
 .list {
-    float: right;
-    top: 20px;
+  float: right;
+  top: 20px;
 }
 
 .bookmark:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.dropbt{
-    background-color: #4CAF50;
-    color: white;
-    padding: 5px;
-    font-size: 10px;
-    border: none;
-    cursor: pointer;
+.dropbt {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px;
+  font-size: 10px;
+  border: none;
+  cursor: pointer;
 }
 
-.dropdown{
-    top: 10px;
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
+.dropdown {
+  top: 10px;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 10px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-span {
+  display: inline-block;
 }
 
 .dropdown-content a {
-    color: black;
-    padding: 5px 26px;
-    font-size: 10px;
-    text-decoration: none;
-    display: block;
+  color: black;
+  padding: 5px 26px;
+  font-size: 10px;
+  text-decoration: none;
+  display: block;
 }
 
 .dropdown-content a:hover {
-    background-color: #f1f1f1
+  background-color: #f1f1f1;
 }
 
 .dropdown:hover .dropdown-content {
-    display: block;
+  display: block;
 }
 
 .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
+  background-color: #3e8e41;
 }
 
-.forecast img{
-    width: 30px; /*changed for building. default = 50 */
-    opacity: 50%;
+.forecast img {
+  width: 30px; /*changed for building. default = 50 */
+  opacity: 50%;
 }
 
-.forecast img:hover{
-    opacity: 100%;
+.forecast img:hover {
+  opacity: 100%;
 }
 
 .degree {
-    font-size: 16;
-    border-collapse: collapse;
-    position: absolute;
-    margin-top: 10px;
-    margin-left: 0.5rem;
+  font-size: 16;
+  border-collapse: collapse;
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 0.5rem;
 }
 
-.degree button{
-    height: 30;
-    background-color: white;
-    border-collapse: collapse;
-    border-spacing: 0px;
-    border: 1px solid #e783ba;
-    color: #777777;
-    display: block;
-    width: 40px;
-    cursor: pointer;
+.degree button {
+  height: 30;
+  background-color: white;
+  border-collapse: collapse;
+  border-spacing: 0px;
+  border: 1px solid #e783ba;
+  color: #777777;
+  display: block;
+  width: 40px;
+  cursor: pointer;
 }
 
 .degree button:not(:last-child) {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 /* .degree button:hover{    
@@ -133,32 +137,31 @@
 
 /* why border does not collapse when hover */
 
-
 .degree .activedegree {
-    font-weight: bolder;
+  font-weight: bolder;
 }
 
-.degree button:focus{
-    outline: 0;
+.degree button:focus {
+  outline: 0;
 }
 
 .history {
-    font-size: smaller;
-    font-weight: lighter;
-    margin-top: 7.5px;
-    margin-bottom: 7.5px;
+  font-size: smaller;
+  font-weight: lighter;
+  margin-top: 7.5px;
+  margin-bottom: 7.5px;
 }
 
-.historyRemove:hover{
-    cursor: pointer;
+.historyRemove:hover {
+  cursor: pointer;
 }
 
 .historyRemove {
-    margin-left: 3px;
-    margin-right: 3px;
-    color: #eb4034
+  margin-left: 3px;
+  margin-right: 3px;
+  color: #eb4034;
 }
 
 #error {
-    border-bottom: 1px solid #eb4034;
+  border-bottom: 1px solid #eb4034;
 }

@@ -157,7 +157,7 @@ class WeatherRouter extends Component {
     let lang = this.context;
     const { bookmark } = this.state;
     const list = bookmark.map((bookmark, key) => (
-      <span key={key} onClick={() => this.fetchWithId(bookmark.id)}>
+      <span className="dropdown-span" key={key} onClick={() => this.fetchWithId(bookmark.id)}>
         {bookmark.name}
       </span>
     ));

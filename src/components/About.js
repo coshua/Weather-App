@@ -15,7 +15,6 @@ const About = (props) => {
       >
         <img
           className="card-img-bottom img-fluid mx-auto"
-          src={Profile}
           alt="Dongju Kim"
         />
         <div className="card-body">
