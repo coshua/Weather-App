@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Forecast.css";
 import LangContext from "./LangContext";
@@ -126,16 +126,16 @@ const findMonth = (dt) => {
 
 const Forecast = ({ match, history, daily, city }) => {
   // const specific = daily[match.params.id];
+  const [specific, setSpecific] = useState();
   console.log("Forecast loaded");
   const lang = useContext(LangContext);
-  let specific;
   useEffect(() => {
     const day = daily.filter(
       (daily) => findDate(daily.dt) + "" === this.props.match.params.id
     );
     console.log(day);
-    specific = day[0];
-  });
+    setSpecific(day[0]);
+  }, [daily]);
   const calculateDay = (num) => {
     var month = findMonth(specific.dt) + 1;
     if (month === 1 || 3 || 5 || 7 || 8 || 10 || 12) {
