@@ -4,13 +4,12 @@ import { Route, Switch } from "react-router-dom";
 import LangContext from "./LangContext";
 import Weather from "./Weather";
 import Forecast from "./Forecast";
+import Home from './Home';
 import ForecastList from "./ForecastList";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const WEATHER_API = process.env.REACT_APP_WEATHER_API_KEY;
 const TIMEZONE_API = process.env.REACT_APP_TIMEZONE_API_KEY;
-const DEFAULT_LOCATION_ID = 1842025;
+const DEFAULT_LOCATION_ID = 5809844;
 
 class WeatherRouter extends Component {
   static contextType = LangContext;
@@ -39,7 +38,7 @@ class WeatherRouter extends Component {
 
   handleSubmit = (e) => {
     let lang = this.context;
-    e.preventDefault(); //need to understand
+    e.preventDefault();
     const matched = city.filter((data) => {
       return data.name.toLowerCase() === this.state.input.toLowerCase();
     });
@@ -250,7 +249,7 @@ class WeatherRouter extends Component {
                         error={error} loading={loading} date={date} /> */}
           <Route
             exact
-            path={this.props.match.path}
+            path='/weather'
             render={({ match, history }) => (
               <>
                 <Weather
@@ -273,16 +272,18 @@ class WeatherRouter extends Component {
                   date={date}
                 />
                 <ForecastList daily={daily} match={match} history={history} />
+                
               </>
             )}
           />
-
           <Route
-            path={`${this.props.match.url}/:id`}
-            render={({ match, history }) => (
+            path="/test"
+            component={Home}
+          />
+          <Route
+            exact path="weather/:id"
+            render={() => (
               <Forecast
-                match={match}
-                history={history}
                 daily={daily}
                 city={current.name}
               />

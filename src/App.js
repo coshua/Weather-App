@@ -12,7 +12,7 @@ import About from "./components/About";
 import Home from "./components/Home";
 
 class App extends Component {
-  state = { lang: "kr" };
+  state = { lang: "en" };
 
   toggleLang = () => {
     this.setState(({ lang }) => ({
@@ -52,7 +52,7 @@ class App extends Component {
               </Switch>
             </main>
 
-            <footer>Page created by Joshua</footer>
+            <footer>Page created by Dongju</footer>
           </Router>
         </div>
       </LangContext.Provider>

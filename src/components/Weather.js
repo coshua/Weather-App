@@ -63,7 +63,7 @@ class Weather extends Component {
                   )}
                 </span>
                 <input
-                  placeholder="Busan"
+                  placeholder="Irvine"
                   type="text"
                   spellCheck="false"
                   id={error.length > 0 ? "error" : "city"}
@@ -119,6 +119,7 @@ class Weather extends Component {
             <div className={weathercss.description}>
               {current.weather[0].description}
             </div>
+         
           </div>
         ) : (
           ""

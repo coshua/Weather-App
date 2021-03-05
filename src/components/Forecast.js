@@ -131,7 +131,7 @@ const Forecast = ({ match, history, daily, city }) => {
   let specific;
   useEffect(() => {
     const day = daily.filter(
-      (daily) => findDate(daily.dt) + "" === match.params.id
+      (daily) => findDate(daily.dt) + "" === this.props.match.params.id
     );
     console.log(day);
     specific = day[0];
