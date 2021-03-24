@@ -2,8 +2,14 @@
   display: flex;
 }
 
+.weather {
+  flex-direction: column;
+  display: flex;
+}
+
 #mainIcon {
-  width: 140px;
+  justify-content: center;
+  width: 22vw;
 }
 
 .create-button {

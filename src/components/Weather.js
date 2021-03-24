@@ -224,13 +224,13 @@ class Weather extends Component {
               {loading ? <FontAwesomeIcon icon={faSpinner} pulse /> : date}
               {/* {loading ? (<div className="spinner-border spinner-border-sm text-info"></div>) : (date)} */}
             </div>
-
+            <div className={weathercss.icon}>
             <img
               id="mainIcon"
               src={`https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`}
               alt="Icon"
             />
-
+          </div>
             <div className={weathercss.main}>
               {current.weather[0].main} <FontAwesomeIcon icon={faWind} />
               {current.wind.speed}m/s
