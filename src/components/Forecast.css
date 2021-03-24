@@ -17,3 +17,7 @@
     position: fixed;
     right: 520px;
 } */
+
+body {
+  position: fixed;
+}

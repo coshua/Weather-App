@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Forecast.css";
 import LangContext from "./LangContext";
@@ -114,28 +114,23 @@ const feelsLike = (daily, lang = "kr") => {
   return message;
 };
 
-const findDate = (dt) => {
+/* const findDate = (dt) => {
   var time = new Date(dt * 1000);
   return time.getDate();
-};
+}; */
 
 const findMonth = (dt) => {
   var time = new Date(dt * 1000);
   return time.getMonth();
 };
 
-const Forecast = ({ match, history, daily, city }) => {
-  // const specific = daily[match.params.id];
-  const [specific, setSpecific] = useState();
-  console.log("Forecast loaded");
+const Forecast = ({ match, history, daily, current, gmtOffset }) => {
+  const day = daily.filter((daily) => {
+    var time = new Date((daily.dt + gmtOffset) * 1000);
+    return time.getDate() + "" === match.params.id
+  });
+  const specific = day[0];
   const lang = useContext(LangContext);
-  useEffect(() => {
-    const day = daily.filter(
-      (daily) => findDate(daily.dt) + "" === this.props.match.params.id
-    );
-    console.log(day);
-    setSpecific(day[0]);
-  }, [daily]);
   const calculateDay = (num) => {
     var month = findMonth(specific.dt) + 1;
     if (month === 1 || 3 || 5 || 7 || 8 || 10 || 12) {
@@ -152,7 +147,6 @@ const Forecast = ({ match, history, daily, city }) => {
       }
     }
   };
-  // const [forecast, setForecast] = useState([]);
   return (
     <div>
       <img
@@ -160,7 +154,7 @@ const Forecast = ({ match, history, daily, city }) => {
         alt="Icon"
       />{" "}
       <br />
-      {`Weather of ${city}, ${convertUnixToDate(specific.dt)}`} <br />
+      {`Weather of ${current.name}, ${convertUnixToDate(specific.dt + gmtOffset)}`} <br />
       {feelsLike(specific, lang)} <br />
       {measurePrecip(specific).length > 0 ? (
         <>
@@ -181,8 +175,8 @@ const Forecast = ({ match, history, daily, city }) => {
             </li>
           </NavLink>
         ) : (
-          <li class="page-item disabled">
-            <button class="page-link" href="#">
+          <li className="page-item disabled">
+            <button className="page-link" href="#">
               {lang === "kr" ? "전날" : "Previous"}
             </button>
           </li>
