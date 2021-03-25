@@ -31,12 +31,12 @@ main {
 
 footer {
   padding: 2px;
-  min-height: 100px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   background: #eeeeee;
-  font-size: 1.3vw;
+  font-size: 14px;
   text-align: center;
 }
 
