@@ -43,11 +43,12 @@ class ForecastList extends Component {
             alt="Icon"
           />
         </Link>
-        <p className="caption">
+        <br/>
+        <span className="caption">
           {this.convertUnixToAbbr(daily.dt + gmtOffset)}
           <br />
           {Math.round(daily.temp.max)}, {Math.round(daily.temp.min)}
-        </p>
+        </span>
       </div>
     ));
     return <div className="forecast">{forecastRouter}</div>;

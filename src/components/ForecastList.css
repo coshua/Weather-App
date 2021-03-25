@@ -6,12 +6,13 @@
 
 
 .items .caption{
+    display: inline-block;
     position: relative;
-    z-index: 999;
+    /* z-index: 999; */
     /* margin: 0 auto; */
-    top: -25%;
+    top: 0;
     font-size: x-small;
-    text-align: center;
+    /* text-align: center; */
      /* Set the width of the positioned div */
 }
 
@@ -20,7 +21,7 @@
     margin-top: 15px;
     display: flex;
     max-width: 320px;
-    height: 110px;
+    height: 120px;
     flex-wrap: wrap;
 }
 
