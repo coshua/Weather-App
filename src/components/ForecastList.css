@@ -1,20 +1,37 @@
-.items{
+/* .items{
     position: relative;
-    display: inline-block; /* Make the width of box same as image */
+    display: inline-block;
     width: 4.5%;
-}
+} */
+
+
 .items .caption{
-    position: absolute;
+    position: relative;
     z-index: 999;
     /* margin: 0 auto; */
-    left: 0;
-    right: 0;
-    top: 50%; /* Adjust this value to move the positioned div up and down */
+    top: -25%;
     font-size: x-small;
     text-align: center;
      /* Set the width of the positioned div */
 }
 
 .forecast {
-    margin-top: 20px;
+    margin: auto;
+    margin-top: 15px;
+    display: flex;
+    max-width: 320px;
+    height: 110px;
+    flex-wrap: wrap;
+}
+
+.items {
+    position: relative;
+    width: 80px;
+    height: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+    .forecast {
+        display: none;
+    }
 }

@@ -14,13 +14,14 @@ body {
   overflow-x: hidden;
 }
 
-.App-header {
+/* .App-header {
   background-color: #282c34;
   display: flex;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
+ */
 
 main {
   flex-grow: 1;
@@ -46,8 +47,9 @@ header {
 @media (max-width: 600px) {
   nav {
     display: none;
-  }
-
+  } 
+  
+  
   footer {
     display: none;
   }

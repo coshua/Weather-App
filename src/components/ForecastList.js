@@ -36,7 +36,7 @@ class ForecastList extends Component {
   render() {
     const { daily, gmtOffset, match } = this.props;
     const forecastRouter = daily.map((daily, index) => (
-      <div className="items" key={index}>
+      <div className={`items item${index}`} key={index}>
         <Link to={`${match.url}/${this.convertUnixToDate(daily.dt + gmtOffset)}`}>
           <img
             src={`https://openweathermap.org/img/wn/${daily.weather[0].icon}@2x.png`}

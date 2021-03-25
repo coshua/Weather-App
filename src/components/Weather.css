@@ -1,15 +1,10 @@
-.Forecast {
-  display: flex;
-}
-
 .weather {
   flex-direction: column;
   display: flex;
 }
 
 #mainIcon {
-  justify-content: center;
-  width: 22vw;
+  width: 17vw;
 }
 
 .create-button {
@@ -170,4 +165,10 @@
 
 #error {
   border-bottom: 1px solid #eb4034;
+}
+
+@media (max-width: 600px) {
+  #mainIcon {
+    width: 100px;
+  }
 }
