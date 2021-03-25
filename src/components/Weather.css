@@ -100,11 +100,11 @@
 
 .forecast img {
   width: 30px; /*changed for building. default = 50 */
-  opacity: 50%;
+  opacity: 0.65;
 }
 
 .forecast img:hover {
-  opacity: 100%;
+  opacity: 1;
 }
 
 .degree {

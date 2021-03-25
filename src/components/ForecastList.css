@@ -17,7 +17,6 @@
 }
 
 .forecast {
-    z-index: 1;
     margin: auto;
     margin-top: 15px;
     display: flex;
