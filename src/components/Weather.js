@@ -194,9 +194,9 @@ class Weather extends Component {
                 />
                 <span className="message">{error}</span>
                 {this.showSearchList()}
-                <div className="create-button" onClick={this.handleSubmit}>
+                <span className="create-button" onClick={this.handleSubmit}>
                   {lang === "kr" ? "검색" : "Find"}
-                </div>
+                </span>
               </form>
             </div>
             <div>{this.showBookmarkList()}</div>

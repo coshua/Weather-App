@@ -8,6 +8,7 @@
 }
 
 .create-button {
+  display: block;
   font-weight: 600;
   max-width: 3rem;
   background-color: #73d4fa;
@@ -172,5 +173,9 @@
 @media (max-width: 600px) {
   #mainIcon {
     width: 100px;
+  }
+
+  .create-button {
+    display: inline-block;
   }
 }

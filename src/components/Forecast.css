@@ -18,3 +18,16 @@
     right: 520px;
 } */
 
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.page-item {
+    width: 100px;
+    list-style-type: none;
+}
+
+.page-item button {
+    width: 80px;
+}

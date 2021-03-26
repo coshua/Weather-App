@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "./Forecast.css";
 import LangContext from "./LangContext";
 
@@ -103,7 +103,7 @@ const feelsLike = (daily, lang = "kr") => {
           Math.round((daily.temp.max - daily.temp.min) * 10) / 10
         }
                 °C 입니다.`
-      : `Perceived temperatures during day and night are ${
+      : `Apparent temperature during day and night are ${
           Math.round(daily.feels_like.day * 10) / 10
         }°C, 
                 ${
@@ -127,13 +127,25 @@ const findMonth = (dt) => {
 const Forecast = ({ match, history, daily, current, gmtOffset }) => {
   const day = daily.filter((daily) => {
     var time = new Date((daily.dt + gmtOffset) * 1000);
-    return time.getDate() + "" === match.params.id
+    return time.getDate() + "" === match.params.id;
   });
   const specific = day[0];
+  console.log(specific.dt);
   const lang = useContext(LangContext);
   const calculateDay = (num) => {
     var month = findMonth(specific.dt) + 1;
-    if (month === 1 || 3 || 5 || 7 || 8 || 10 || 12) {
+    console.log(month);
+    if (num === -1) {
+      if (parseInt(match.params.id) > 1) {
+        return parseInt(match.params.id) - 1;
+      } else if (month === 5 || 7 || 10 || 12) {
+        console.log(month);
+        console.log("month is five");
+        return 30;
+      } else {
+        return 31;
+      }
+    } else if (month === 1 || 3 || 5 || 7 || 8 || 10 || 12) {
       if (parseInt(match.params.id) + num > 31) {
         return parseInt(match.params.id) + num - 31;
       } else {
@@ -154,7 +166,10 @@ const Forecast = ({ match, history, daily, current, gmtOffset }) => {
         alt="Icon"
       />{" "}
       <br />
-      {`Weather of ${current.name}, ${convertUnixToDate(specific.dt + gmtOffset)}`} <br />
+      {`Weather of ${current.name}, ${convertUnixToDate(
+        specific.dt + gmtOffset
+      )}`}{" "}
+      <br />
       {feelsLike(specific, lang)} <br />
       {measurePrecip(specific).length > 0 ? (
         <>
@@ -167,41 +182,43 @@ const Forecast = ({ match, history, daily, current, gmtOffset }) => {
       {measureWindspeed(specific.wind_speed, lang)} <br />
       <ul className="pagination pagination-sm justify-content-center">
         {specific.dt !== daily[0].dt ? (
-          <NavLink to={`/weather/${calculateDay(-1)}`}>
-            <li className="page-item">
+          <li className="page-item">
+            <Link to={`/weather/${calculateDay(-1)}`}>
               <button className="page-link page-link-action">
                 {lang === "kr" ? "전날" : "Previous"}
               </button>
-            </li>
-          </NavLink>
+            </Link>
+          </li>
         ) : (
           <li className="page-item disabled">
-            <button className="page-link" href="#">
+            <button className="page-link page-link-action" disabled>
               {lang === "kr" ? "전날" : "Previous"}
             </button>
           </li>
         )}
         {/* <button onClick={() => history.goBack()}>Home</button> */}
-        <NavLink to={"/weather"}>
-          <li className="page-item">
+
+        <li className="page-item">
+          <Link to="/weather">
             <button className="page-link">
               {lang === "kr" ? "홈" : "Home"}
             </button>
-          </li>
-        </NavLink>
+          </Link>
+        </li>
+
         {specific.dt !== daily[7].dt ? (
-          <NavLink to={`/weather/${calculateDay(1)}`}>
-            <li className="page-item">
+          <li className="page-item">
+            <Link to={`/weather/${calculateDay(1)}`}>
               <button className="page-link">
                 {lang === "kr" ? "다음날" : "Next"}
               </button>
-            </li>
-          </NavLink>
+            </Link>
+          </li>
         ) : (
-          <li class="page-item disabled">
-            <span class="page-link" href="#">
+          <li className="page-item disabled">
+            <button className="page-link" disabled>
               {lang === "kr" ? "다음날" : "Next"}
-            </span>
+            </button>
           </li>
         )}
       </ul>
