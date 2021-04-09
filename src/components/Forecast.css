@@ -29,5 +29,7 @@
 }
 
 .page-item button {
+    border: 1px solid #73d4fa;
+    background: white;
     width: 80px;
 }
